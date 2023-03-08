@@ -1,13 +1,13 @@
-import { Logger } from 'tslog';
-
-export type LogType = 'json' | 'pretty' | 'hidden';
-export type LogLevel = 'silly' | 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal';
+import { Logger } from '@aws-lambda-powertools/logger';
 
 export const logger = new Logger({
-  colorizePrettyLogs: false,
-  displayInstanceName: false,
-  minLevel: (process.env.LOG_LEVEL as LogLevel) || 'info',
-  name: 'runner-binaries-syncer',
-  overwriteConsole: true,
-  type: (process.env.LOG_TYPE as LogType) || 'pretty',
+  serviceName: 'webhook',
 });
+
+export class LogFields {
+  static fields: { [key: string]: string } = {};
+
+  public static print(): { data: { [key: string]: string } } {
+    return { data: LogFields.fields };
+  }
+}

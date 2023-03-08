@@ -6,7 +6,7 @@ import { PassThrough } from 'stream';
 
 import { logger as rootLogger } from './logger';
 
-const logger = rootLogger.getChildLogger();
+const logger = rootLogger.createChild();
 
 const versionKey = 'name';
 

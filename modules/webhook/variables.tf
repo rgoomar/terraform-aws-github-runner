@@ -131,14 +131,10 @@ variable "kms_key_arn" {
 variable "log_type" {
   description = "Logging format for lambda logging. Valid values are 'json', 'pretty', 'hidden'. "
   type        = string
-  default     = "pretty"
+  default     = null
   validation {
-    condition = anytrue([
-      var.log_type == "json",
-      var.log_type == "pretty",
-      var.log_type == "hidden",
-    ])
-    error_message = "`log_type` value not valid. Valid values are 'json', 'pretty', 'hidden'."
+    condition     = var.log_type == null
+    error_message = "DEPRECATED: `log_type` is not longer supported."
   }
 }
 
@@ -153,7 +149,11 @@ variable "log_level" {
       var.log_level == "warn",
       var.log_level == "error",
     ])
-    error_message = "`log_level` value not valid. Valid values are 'silly', 'trace', 'debug', 'info', 'warn', 'error', 'fatal'."
+    error_message = "`log_level` value not valid. Valid values are 'debug', 'info', 'warn', 'error'."
+  }
+  validation {
+    condition     = !contains(["silly", "trace", "fatal"], var.log_level)
+    error_message = "PLEASE MIGRATE: The following log levels: 'silly', 'trace' and 'fatal' are not longeer supported."
   }
 }
 

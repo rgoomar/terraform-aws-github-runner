@@ -7,5 +7,5 @@ sync()
     if (e instanceof Error) {
       logger.error(e.message);
     }
-    logger.trace(e);
+    logger.debug('Ignoring error', { error: e });
   });
