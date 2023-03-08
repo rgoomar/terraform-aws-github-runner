@@ -8,7 +8,7 @@ import { getParameterValue } from '../ssm';
 import { LogFields, logger as rootLogger } from './logger';
 
 const supportedEvents = ['workflow_job'];
-const logger = rootLogger.getChildLogger();
+const logger = rootLogger.createChild();
 
 export async function handle(headers: IncomingHttpHeaders, body: string): Promise<Response> {
   const { environment, repositoryWhiteList, queuesConfig } = readEnvironmentVariables();
@@ -17,6 +17,13 @@ export async function handle(headers: IncomingHttpHeaders, body: string): Promis
   for (const key in headers) {
     headers[key.toLowerCase()] = headers[key];
   }
+
+  logger.addPersistentLogAttributes({
+    context: {
+      'github-event': headers['x-github-event'],
+      'github-delivery': headers['x-github-delivery'],
+    },
+  });
 
   const githubEvent = headers['x-github-event'] as string;
 

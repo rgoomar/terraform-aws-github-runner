@@ -1,18 +1,13 @@
-import { Logger } from 'tslog';
+import { Logger } from '@aws-lambda-powertools/logger';
 
 export const logger = new Logger({
-  colorizePrettyLogs: false,
-  displayInstanceName: false,
-  minLevel: process.env.LOG_LEVEL || 'info',
-  name: 'webhook',
-  overwriteConsole: true,
-  type: process.env.LOG_TYPE || 'pretty',
+  serviceName: 'webhook',
 });
 
 export class LogFields {
   static fields: { [key: string]: string } = {};
 
-  public static print(): string {
-    return JSON.stringify(LogFields.fields);
+  public static print(): { data: { [key: string]: string } } {
+    return { data: LogFields.fields };
   }
 }

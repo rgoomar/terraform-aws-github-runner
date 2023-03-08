@@ -148,13 +148,10 @@ variable "log_level" {
   default     = "info"
   validation {
     condition = anytrue([
-      var.log_level == "silly",
-      var.log_level == "trace",
       var.log_level == "debug",
       var.log_level == "info",
       var.log_level == "warn",
       var.log_level == "error",
-      var.log_level == "fatal",
     ])
     error_message = "`log_level` value not valid. Valid values are 'silly', 'trace', 'debug', 'info', 'warn', 'error', 'fatal'."
   }
