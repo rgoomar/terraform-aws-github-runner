@@ -456,7 +456,11 @@ variable "egress_rules" {
 variable "log_type" {
   description = "Logging format for lambda logging. Valid values are 'json', 'pretty', 'hidden'. "
   type        = string
-  default     = "pretty"
+  default     = null
+  validation {
+    condition     = var.log_type == null
+    error_message = "DEPRECATED: `log_type` is not longer supported."
+  }
 }
 
 variable "log_level" {

@@ -157,7 +157,8 @@ function generateFleetOverrides(
 }
 
 export async function createRunner(runnerParameters: RunnerInputParameters): Promise<void> {
-  logger.debug('Runner configuration: ' + JSON.stringify(runnerParameters), LogFields.print());
+  const runnerParametersLog = JSON.stringify(runnerParameters).replace(/--token\s+\S+/g, '--token <REDACTED>');
+  logger.debug('Runner configuration: ' + runnerParametersLog, LogFields.print());
 
   const ec2 = new EC2();
   const ssm = new SSM();
