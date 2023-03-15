@@ -25,6 +25,7 @@ resource "aws_lambda_function" "syncer" {
     variables = {
       GITHUB_RUNNER_ARCHITECTURE  = var.runner_architecture
       GITHUB_RUNNER_OS            = local.gh_binary_os_label[var.runner_os]
+      ENVIRONMENT                 = var.prefix
       LOG_LEVEL                   = var.log_level
       POWERTOOLS_LOGGER_LOG_EVENT = var.log_level == "debug" ? "true" : "false"
       S3_BUCKET_NAME              = aws_s3_bucket.action_dist.id

@@ -1,10 +1,12 @@
-import { logger } from './syncer/logger';
+import { Context } from 'aws-lambda';
+
+import { logger, setContext } from './logger';
 import { sync } from './syncer/syncer';
 
 // eslint-disable-next-line
-export async function handler(event: any, context: any): Promise<void> {
+export async function handler(event: any, context: Context): Promise<void> {
+  setContext(context, 'lambda.ts');
   logger.logEventIfEnabled(event);
-  logger.addContext(context);
 
   try {
     await sync();

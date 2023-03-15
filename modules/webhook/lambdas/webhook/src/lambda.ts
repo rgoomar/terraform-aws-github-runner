@@ -1,15 +1,15 @@
 import { APIGatewayEvent, Context } from 'aws-lambda';
 
+import { logger, setContext } from './logger';
 import { handle } from './webhook/handler';
-import { logger } from './webhook/logger';
 
 export interface Response {
   statusCode: number;
   body?: string;
 }
 export async function githubWebhook(event: APIGatewayEvent, context: Context): Promise<Response> {
+  setContext(context, 'lambda.ts');
   logger.logEventIfEnabled(event);
-  logger.addContext(context);
 
   let result: Response;
   try {

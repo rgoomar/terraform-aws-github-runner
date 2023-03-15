@@ -3,12 +3,12 @@ import { CheckRunEvent, WorkflowJobEvent } from '@octokit/webhooks-types';
 import { IncomingHttpHeaders } from 'http';
 
 import { Response } from '../lambda';
+import { LogFields, createChildLogger } from '../logger';
 import { QueueConfig, sendActionRequest, sendWebhookEventToWorkflowJobQueue } from '../sqs';
 import { getParameterValue } from '../ssm';
-import { LogFields, logger as rootLogger } from './logger';
 
 const supportedEvents = ['workflow_job'];
-const logger = rootLogger.createChild();
+const logger = createChildLogger('handler');
 
 export async function handle(headers: IncomingHttpHeaders, body: string): Promise<Response> {
   const { environment, repositoryWhiteList, queuesConfig } = readEnvironmentVariables();
@@ -19,7 +19,7 @@ export async function handle(headers: IncomingHttpHeaders, body: string): Promis
   }
 
   logger.addPersistentLogAttributes({
-    context: {
+    github: {
       'github-event': headers['x-github-event'],
       'github-delivery': headers['x-github-delivery'],
     },

@@ -1,4 +1,4 @@
-import { logger } from './syncer/logger';
+import { rootLogger as logger } from './syncer/logger';
 import { sync } from './syncer/syncer';
 
 sync()

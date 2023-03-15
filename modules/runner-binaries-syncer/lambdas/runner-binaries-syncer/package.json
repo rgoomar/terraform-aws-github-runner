@@ -19,6 +19,7 @@
     "@babel/helper-get-function-arity": "^7.16.7",
     "@octokit/rest": "^19.0.7",
     "@trivago/prettier-plugin-sort-imports": "^4.1.1",
+    "@types/aws-lambda": "^8.10.111",
     "@types/jest": "^29.4.0",
     "@types/node": "^18.14.6",
     "@types/request": "^2.48.8",
